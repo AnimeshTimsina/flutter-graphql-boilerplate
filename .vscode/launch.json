@@ -1,0 +1,46 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+      {
+        "name": "omsnepal",
+        "request": "launch",
+        "flutterMode": "profile",
+        "type": "dart"
+      },
+      {
+        "name": "iPod touch (7th generation) (mobile)",
+        "request": "launch",
+        "type": "dart",
+        "deviceId": "FBB9DBE1-9296-4633-92AD-3EF061582EB4"
+      },
+      {
+        "name": "Redmi Note 8 Pro",
+        "request": "launch",
+        "type": "dart",
+        "deviceId": "vkbyxwxsjnqg8dtg"
+      },
+      {
+        "name": "iPhone SE",
+        "request": "launch",
+        "type": "dart",
+        "deviceId": "7C7078C2-73E0-4B7E-A0F6-CBF981E0D855"
+      },
+      {
+        "name": "Redmi Note 3 (mobile)",
+        "request": "launch",
+        "type": "dart",
+        "deviceId": "715eecc"
+      },
+    ],
+    "compounds": [
+      {
+        "name": "All Devices",
+        "configurations": [
+          "Redmi Note 8 Pro",
+          "iPhone SE",
+          "Redmi Note 3 (mobile)",
+          "iPod touch (7th generation) (mobile)"
+        ]
+      }
+    ]
+  }
