@@ -1,6 +1,11 @@
 import 'package:enum_to_string/enum_to_string.dart';
 
-enum ErrorCode { UNAUTHENTICATED, LOGIN_EXPIRED }
+enum ErrorCode {
+  UNAUTHENTICATED,
+  LOGIN_EXPIRED,
+  DUPLICATE_RECORD,
+  INVALID_CREDENTIALS
+}
 
 class ErrorModel {
   String? message;
@@ -9,7 +14,11 @@ class ErrorModel {
   ErrorModel(this.message, this.extensions);
 
   ErrorModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
+    message = getErrorMessage(
+        json['extensions'] != null
+            ? ErrorExtensionModel.fromJson(json['extensions']).code
+            : null,
+        json["message"]);
     extensions = json['extensions'] != null
         ? ErrorExtensionModel.fromJson(json['extensions'])
         : null;
@@ -38,5 +47,20 @@ class ErrorExtensionModel {
     Map data = {};
     data['code'] = EnumToString.convertToString(code);
     return data;
+  }
+}
+
+String getErrorMessage(ErrorCode? errorCode, String defaultMessage) {
+  switch (errorCode) {
+    case ErrorCode.LOGIN_EXPIRED:
+      return "Login has expired";
+    case ErrorCode.UNAUTHENTICATED:
+      return "Not authenticated";
+    case ErrorCode.DUPLICATE_RECORD:
+      return defaultMessage;
+    case ErrorCode.INVALID_CREDENTIALS:
+      return defaultMessage;
+    default:
+      return "Internal Server Error";
   }
 }

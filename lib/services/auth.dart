@@ -44,6 +44,22 @@ class AuthState extends ChangeNotifier {
       return false;
   }
 
+  String getFullName() {
+    return '${userInfo?.firstName != null ? userInfo?.firstName : ''} ${userInfo?.lastName != null ? userInfo?.lastName : ''} ';
+  }
+
+  String getFirstName() {
+    return '${userInfo?.firstName ?? ''}';
+  }
+
+  String getEmail() {
+    return '${userInfo?.email ?? ''}';
+  }
+
+  String getUserTypeInString() {
+    return userInfo?.role != null ? getUserType(userInfo!.role) : '';
+  }
+
   void automaticLogin(String refreshToken) async {
     if (true) {
       _loadingStateUserFetch = LoadingState.loading;
@@ -75,7 +91,8 @@ class AuthState extends ChangeNotifier {
               (index) => ErrorModel.fromJson(incoming["errors"][index]));
           if (errors.length > 0) {
             if (errors.first.extensions?.code == ErrorCode.LOGIN_EXPIRED) {
-              _errorMessage = 'Login session has expired';
+              _errorMessage = errors.first.message;
+              // _errorMessage = 'Login session has expired';
             } else
               _errorMessage = null;
           }

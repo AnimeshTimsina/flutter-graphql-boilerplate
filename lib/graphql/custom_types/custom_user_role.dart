@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-
 enum USER_ROLE { ADMIN, CLIENT, STAFF }
 
-String getUserType(BuildContext context, USER_ROLE? type) {
+String getUserType(USER_ROLE? type) {
   switch (type) {
     case USER_ROLE.ADMIN:
       return 'Admin';
