@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
             data: ThemeData(unselectedWidgetColor: Colors.white),
             child: Checkbox(
               value: form.remember,
-              checkColor: Theme.of(context).accentColor,
+              checkColor: Theme.of(context).indicatorColor,
               activeColor: Colors.white,
               onChanged: (value) {
                 setState(() {
@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       onPressed: () => _login(authState),
       text: "LOGIN",
-      loadingColor: Theme.of(context).accentColor,
+      loadingColor: Theme.of(context).indicatorColor,
       loading: authState.loadingStateUserLogin == LoadingState.loading,
     );
   }

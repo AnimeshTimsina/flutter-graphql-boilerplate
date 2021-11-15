@@ -24,8 +24,8 @@ class CustomChip extends StatelessWidget {
           onPressed: () {
             if (onTap != null) onTap!();
           },
-          side:
-              BorderSide(color: Theme.of(context).accentColor.withOpacity(0.2)),
+          side: BorderSide(
+              color: Theme.of(context).indicatorColor.withOpacity(0.2)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -40,8 +40,8 @@ class CustomChip extends StatelessWidget {
           ),
           elevation: isActive ? 20 : 0,
           backgroundColor: isActive
-              ? Theme.of(context).accentColor
-              : Theme.of(context).accentColor.withOpacity(0.1)),
+              ? Theme.of(context).indicatorColor
+              : Theme.of(context).indicatorColor.withOpacity(0.1)),
     );
   }
 }

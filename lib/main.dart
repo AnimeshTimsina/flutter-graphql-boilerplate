@@ -1,12 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nepali_utils/nepali_utils.dart';
-import 'package:omsnepal/screens/cart/cart.dart';
-import 'package:omsnepal/screens/checkout/checkout.dart';
-import 'package:omsnepal/screens/existing-customer/container.dart';
-import 'package:omsnepal/screens/existing-customer/existing-customer.dart';
-import 'package:omsnepal/screens/new-customer/container.dart';
-import 'package:omsnepal/screens/new-customer/new-customer.dart';
-import 'package:omsnepal/screens/password-reset/password-reset.dart';
 import 'package:omsnepal/screens/screens.dart';
 import 'package:omsnepal/services/auth.dart';
 import 'package:omsnepal/services/preferences.dart';

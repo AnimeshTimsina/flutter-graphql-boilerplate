@@ -165,8 +165,8 @@ class _ItemPopupState extends State<ItemPopup> {
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Theme.of(context).accentColor)),
+                  backgroundColor: MaterialStateProperty.all(
+                      Theme.of(context).indicatorColor)),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -178,7 +178,7 @@ class _ItemPopupState extends State<ItemPopup> {
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(_disableOrderButton
                       ? Theme.of(context).disabledColor
-                      : Theme.of(context).accentColor)),
+                      : Theme.of(context).indicatorColor)),
               onPressed: _disableOrderButton ? null : _addToOrder,
               child: Text('Add to order')),
         ),
@@ -221,7 +221,7 @@ class _ItemPopupState extends State<ItemPopup> {
                 Icons.remove_circle,
                 color: _disableMinusButton
                     ? Theme.of(context).disabledColor
-                    : Theme.of(context).accentColor,
+                    : Theme.of(context).indicatorColor,
               ),
               onPressed: _disableMinusButton ? null : _subtract,
             ),
@@ -246,8 +246,8 @@ class _ItemPopupState extends State<ItemPopup> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: IconButton(
               onPressed: _add,
-              icon:
-                  Icon(Icons.add_circle, color: Theme.of(context).accentColor),
+              icon: Icon(Icons.add_circle,
+                  color: Theme.of(context).indicatorColor),
             ),
           )
         ]);

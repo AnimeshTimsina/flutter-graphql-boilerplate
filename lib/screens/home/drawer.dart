@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:omsnepal/models/constants.dart';
+import 'package:omsnepal/screens/existing-customer/arguments.dart';
 import 'package:omsnepal/screens/home/styles.dart';
 import 'package:omsnepal/screens/new-customer/arguments.dart';
 import 'package:omsnepal/services/auth.dart';
@@ -27,7 +28,7 @@ class CustomDrawer extends StatelessWidget {
             accountEmail: Text(authState.getEmail()),
             decoration: _isDark
                 ? null
-                : BoxDecoration(color: Theme.of(context).accentColor),
+                : BoxDecoration(color: Theme.of(context).indicatorColor),
             // currentAccountPicture: authState.userInfo?.displayPicture == null
             //     ? Container(
             //         child: Icon(
@@ -62,10 +63,10 @@ class CustomDrawer extends StatelessWidget {
                 ListTile(
                   dense: true,
                   leading: Icon(Icons.brightness_2,
-                      size: 20.0, color: Theme.of(context).accentColor),
+                      size: 20.0, color: Theme.of(context).indicatorColor),
                   title: Text('Dark Mode', style: TextStyle(fontSize: 15.0)),
                   trailing: Switch.adaptive(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).indicatorColor,
                     value: themeState.themeMode == ThemeMode.dark,
                     onChanged: (bool value) {
                       themeState.toggleTheme();
@@ -74,10 +75,39 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   dense: true,
+                  leading: Icon(Icons.local_shipping,
+                      size: 20.0, color: Theme.of(context).indicatorColor),
+                  title: Text("Shipments", style: TextStyle(fontSize: 15.0)),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/new-customer',
+                        arguments: NewCustomerArgument(fromCheckout: false));
+                  },
+                ),
+                ListTile(
+                  dense: true,
                   leading: Icon(Icons.person_add,
-                      size: 20.0, color: Theme.of(context).accentColor),
-                  title: Text("Add New Customer",
-                      style: TextStyle(fontSize: 15.0)),
+                      size: 20.0, color: Theme.of(context).indicatorColor),
+                  title: Text("Customers", style: TextStyle(fontSize: 15.0)),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/existing-customer',
+                        arguments: ExistingCustomerArgument(fromOrder: false));
+                  },
+                ),
+                ListTile(
+                  dense: true,
+                  leading: Icon(Icons.all_inbox,
+                      size: 20.0, color: Theme.of(context).indicatorColor),
+                  title: Text("Orders", style: TextStyle(fontSize: 15.0)),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/new-customer',
+                        arguments: NewCustomerArgument(fromCheckout: false));
+                  },
+                ),
+                ListTile(
+                  dense: true,
+                  leading: Icon(Icons.people,
+                      size: 20.0, color: Theme.of(context).indicatorColor),
+                  title: Text("Users", style: TextStyle(fontSize: 15.0)),
                   onTap: () {
                     Navigator.pushNamed(context, '/new-customer',
                         arguments: NewCustomerArgument(fromCheckout: false));
@@ -86,7 +116,7 @@ class CustomDrawer extends StatelessWidget {
                 ListTile(
                   dense: true,
                   leading: Icon(Icons.vpn_key,
-                      size: 20.0, color: Theme.of(context).accentColor),
+                      size: 20.0, color: Theme.of(context).indicatorColor),
                   title:
                       Text("Change Password", style: TextStyle(fontSize: 15.0)),
                   onTap: () {
@@ -96,7 +126,7 @@ class CustomDrawer extends StatelessWidget {
                 ListTile(
                   dense: true,
                   leading: Icon(Icons.logout,
-                      size: 20.0, color: Theme.of(context).accentColor),
+                      size: 20.0, color: Theme.of(context).indicatorColor),
                   title: Text("Log out", style: TextStyle(fontSize: 15.0)),
                   onTap: () async {
                     Navigator.pop(context);

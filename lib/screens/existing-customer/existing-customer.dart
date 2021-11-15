@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:omsnepal/graphql/models/customer.dart';
 import 'package:omsnepal/models/constants.dart';
 import 'package:omsnepal/screens/checkout/arguments.dart';
+import 'package:omsnepal/screens/new-customer/arguments.dart';
 import 'package:omsnepal/services/api/customers.dart';
 import 'package:omsnepal/services/auth.dart';
 import 'package:omsnepal/services/theme.dart';
@@ -10,7 +12,8 @@ import 'package:omsnepal/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ExistingCustomer extends StatefulWidget {
-  ExistingCustomer({Key? key}) : super(key: key);
+  final bool isFromOrder;
+  ExistingCustomer({Key? key, required this.isFromOrder}) : super(key: key);
 
   @override
   _ExistingCustomerState createState() => _ExistingCustomerState();
@@ -54,6 +57,11 @@ class _ExistingCustomerState extends State<ExistingCustomer> {
         appBar: SecondaryAppBar(
           textColor: _textColor,
           bgColor: _bgColor,
+          actionIcon: widget.isFromOrder ? null : Icons.add,
+          actionClick: () {
+            Navigator.of(context).pushNamed('/new-customer',
+                arguments: NewCustomerArgument(fromCheckout: false));
+          },
         ),
         body: RefreshIndicator(
           onRefresh: () async {
@@ -65,7 +73,8 @@ class _ExistingCustomerState extends State<ExistingCustomer> {
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   alignment: Alignment.topLeft,
                   child: PageTitle(
-                    title: 'Select a customer',
+                    title:
+                        widget.isFromOrder ? 'Select a customer' : 'Customers',
                     icon: Icons.person,
                   )),
               SizedBox(height: 10),
@@ -96,8 +105,7 @@ class _ExistingCustomerState extends State<ExistingCustomer> {
                               child: CircularProgressIndicator.adaptive())
                           : _api.data == null || _searchResults.isEmpty
                               ? Message(
-                                  message:
-                                      'No any data available. Contact Admin',
+                                  message: 'No customers found',
                                   icon: Icons.mood_bad)
                               : ListView.builder(
                                   itemCount: _searchResults.length,
@@ -105,57 +113,71 @@ class _ExistingCustomerState extends State<ExistingCustomer> {
                                   itemBuilder: (context, index) {
                                     final item = _searchResults[index];
 
-                                    return ListTile(
-                                      onTap: () {
-                                        Navigator.of(context).pushNamed(
-                                            '/checkout',
-                                            arguments: CheckoutArgument(
-                                                customer:
-                                                    _searchResults[index]));
-                                      },
-                                      title: Text(
-                                        item.fullName,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14,
-                                            color: _isDark
-                                                ? Colors.grey.shade200
-                                                : LIGHT_TEXT_COLOR_NORMAL),
-                                      ),
-                                      subtitle: item.phone == null
-                                          ? null
-                                          : Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 8.0),
-                                                    child: Icon(
-                                                      Icons.phone,
-                                                      size: 13,
+                                    return Slidable(
+                                      actionPane: SlidableDrawerActionPane(),
+                                      actions: [
+                                        IconSlideAction(
+                                          color: Colors.red.shade500,
+                                          icon: Icons.delete,
+                                          onTap: () {},
+                                        )
+                                      ],
+                                      enabled: true,
+                                      child: ListTile(
+                                        onTap: widget.isFromOrder
+                                            ? () {
+                                                Navigator.of(context).pushNamed(
+                                                    '/checkout',
+                                                    arguments: CheckoutArgument(
+                                                        customer:
+                                                            _searchResults[
+                                                                index]));
+                                              }
+                                            : null,
+                                        title: Text(
+                                          item.fullName,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14,
+                                              color: _isDark
+                                                  ? Colors.grey.shade200
+                                                  : LIGHT_TEXT_COLOR_NORMAL),
+                                        ),
+                                        subtitle: item.phone == null
+                                            ? null
+                                            : Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8.0),
+                                                      child: Icon(
+                                                        Icons.phone,
+                                                        size: 13,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    item.phone ?? '',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyText2!
-                                                        .copyWith(
-                                                            color: _isDark
-                                                                ? Colors.grey
-                                                                    .shade300
-                                                                : Colors.grey
-                                                                    .shade600),
-                                                  )
-                                                ]),
-                                      leading: Icon(Icons.person),
-                                      trailing: item.vat != null
-                                          ? Text('(${item.vat})')
-                                          : null,
-                                      // dense: true,
-                                      horizontalTitleGap: 5,
+                                                    Text(
+                                                      item.phone ?? '',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText2!
+                                                          .copyWith(
+                                                              color: _isDark
+                                                                  ? Colors.grey
+                                                                      .shade300
+                                                                  : Colors.grey
+                                                                      .shade600),
+                                                    )
+                                                  ]),
+                                        leading: Icon(Icons.person),
+                                        trailing: item.vat != null
+                                            ? Text('(${item.vat})')
+                                            : null,
+                                        // dense: true,
+                                        horizontalTitleGap: 5,
+                                      ),
                                     );
                                   },
                                 ),

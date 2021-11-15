@@ -92,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
           });
         },
         child: Icon(_isGrid ? Icons.view_list : Icons.grid_view),
-        backgroundColor: Theme.of(context).accentColor,
+        backgroundColor: Theme.of(context).indicatorColor,
       ),
       drawer: CustomDrawer(authState: authState, themeState: themeState),
       body: RefreshIndicator(
@@ -247,7 +247,7 @@ class _MainScreenState extends State<MainScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Icon(
                   Icons.emoji_emotions,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).indicatorColor,
                 ),
               )
             ],

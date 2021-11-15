@@ -16,7 +16,7 @@ class PageTitle extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Icon(
               icon,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).indicatorColor,
             ),
           )
       ],

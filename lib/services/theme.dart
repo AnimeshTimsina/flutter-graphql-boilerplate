@@ -11,8 +11,8 @@ const Color LIGHT_TEXT_COLOR_BOLD = Color(0xff17475B);
 // const Color PRIMARY_LIGHT_BACKGROUND = Color(0xee83e6d9);
 
 ThemeData lightTheme = ThemeData.light().copyWith(
-  accentColor: Color(0xff49B0C0),
-  // accentColor: Colors.amber[700],
+  indicatorColor: Color(0xff49B0C0),
+  // indicatorColor: Colors.amber[700],
   primaryColor: Color(0xff49B0C0),
   backgroundColor: Colors.white70,
 
@@ -49,9 +49,9 @@ ThemeData lightTheme = ThemeData.light().copyWith(
 );
 
 ThemeData darkTheme = ThemeData.dark().copyWith(
-    accentColor: Color(0xff49B0C0),
+    indicatorColor: Color(0xff49B0C0),
 
-    // accentColor: Colors.amber[700],
+    // indicatorColor: Colors.amber[700],
     textTheme: GoogleFonts.mcLarenTextTheme(ThemeData.dark()
         .textTheme
         .copyWith(

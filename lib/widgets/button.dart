@@ -48,7 +48,7 @@ class Button extends StatelessWidget {
               child: Text(
                 text,
                 style: TextStyle(
-                  color: textColor ?? Theme.of(context).accentColor,
+                  color: textColor ?? Theme.of(context).indicatorColor,
                   letterSpacing: 1.0,
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,

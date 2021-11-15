@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:omsnepal/screens/existing-customer/arguments.dart';
 import 'package:omsnepal/screens/existing-customer/existing-customer.dart';
 import 'package:omsnepal/services/api/customers.dart';
 import 'package:omsnepal/services/auth.dart';
@@ -10,10 +11,12 @@ class ExistingCustomerContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authState = Provider.of<AuthState>(context);
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ExistingCustomerArgument;
     return MultiProvider(providers: [
       ChangeNotifierProvider<CustomersAPI>(
         create: (_) => CustomersAPI(accessToken: authState.token),
       )
-    ], child: ExistingCustomer());
+    ], child: ExistingCustomer(isFromOrder: args.fromOrder));
   }
 }

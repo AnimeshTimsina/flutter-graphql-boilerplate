@@ -83,31 +83,38 @@ class AuthState extends ChangeNotifier {
     });
     if (response?.body != null) {
       _loadingStateUserFetch = LoadingState.loaded;
-      Map<String, dynamic> incoming = json.decode(response!.body);
-      if (incoming["errors"] != null ||
-          incoming["data"]["getNewToken"] == null) {
-        if (incoming["errors"] != null) {
-          List<ErrorModel> errors = List.generate(incoming["errors"].length,
-              (index) => ErrorModel.fromJson(incoming["errors"][index]));
-          if (errors.length > 0) {
-            if (errors.first.extensions?.code == ErrorCode.LOGIN_EXPIRED) {
-              _errorMessage = errors.first.message;
-              // _errorMessage = 'Login session has expired';
-            } else
-              _errorMessage = null;
+      try {
+        Map<String, dynamic> incoming = json.decode(response!.body);
+        if (incoming["errors"] != null ||
+            incoming["data"]["getNewToken"] == null) {
+          if (incoming["errors"] != null) {
+            List<ErrorModel> errors = List.generate(incoming["errors"].length,
+                (index) => ErrorModel.fromJson(incoming["errors"][index]));
+            if (errors.length > 0) {
+              if (errors.first.extensions?.code == ErrorCode.LOGIN_EXPIRED) {
+                _errorMessage = errors.first.message;
+                // _errorMessage = 'Login session has expired';
+              } else
+                _errorMessage = null;
+            }
           }
+          _loadingStateUserFetch = LoadingState.error;
+          notifyListeners();
+        } else {
+          GetNewTokenResponse _response =
+              GetNewTokenResponse.fromJson(incoming["data"]["getNewToken"]);
+          _userInfo = _response.user;
+          _token = _response.accessToken;
+          _refreshToken = _response.refreshToken;
+          sharedPreferenceService.setToken(_refreshToken);
+          // _token = token;
+          _loadingStateUserFetch = LoadingState.loaded;
+          notifyListeners();
         }
+      } catch (err) {
         _loadingStateUserFetch = LoadingState.error;
-        notifyListeners();
-      } else {
-        GetNewTokenResponse _response =
-            GetNewTokenResponse.fromJson(incoming["data"]["getNewToken"]);
-        _userInfo = _response.user;
-        _token = _response.accessToken;
-        _refreshToken = _response.refreshToken;
-        sharedPreferenceService.setToken(_refreshToken);
-        // _token = token;
-        _loadingStateUserFetch = LoadingState.loaded;
+        _errorMessage = 'Something went wrong';
+
         notifyListeners();
       }
     } else {

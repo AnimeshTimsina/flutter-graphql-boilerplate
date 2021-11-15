@@ -10,12 +10,14 @@ class CheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as CheckoutArgument;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as CheckoutArgument?;
     final OrderState _orderState = Provider.of<OrderState>(context);
     final bool _isDark = Theme.of(context).brightness == Brightness.dark;
     final Color _textColor = _isDark ? Colors.white : Colors.grey.shade800;
     final Color _bgColor =
         _isDark ? Theme.of(context).primaryColor : Colors.white;
+    final bool _forShipping = args == null;
     return Scaffold(
       backgroundColor: _bgColor,
       appBar: SecondaryAppBar(
@@ -77,19 +79,25 @@ class CheckoutScreen extends StatelessWidget {
                       Text('Rs ${_orderState.getTotalCartPriceAsFixedString()}')
                     ]),
                 SizedBox(height: 10),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                if (!_forShipping)
+                  Column(
                     children: [
-                      Text('Customer'),
-                      Text('${args.customer.fullName}')
-                    ]),
-                SizedBox(height: 10),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Customer'),
+                            Text('${args.customer!.fullName}')
+                          ]),
+                      SizedBox(height: 10),
+                    ],
+                  ),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton.icon(
                       onPressed: () {},
                       icon: Icon(Icons.done),
-                      label: Text('Place order')),
+                      label: Text(
+                          _forShipping ? 'Add to Shipping' : 'Place order')),
                 )
               ],
             ),

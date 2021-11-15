@@ -1,7 +1,7 @@
 import 'package:omsnepal/graphql/models/customer.dart';
 
 class CheckoutArgument {
-  final Customer customer;
+  final Customer? customer;
 
-  CheckoutArgument({required this.customer});
+  CheckoutArgument({this.customer});
 }

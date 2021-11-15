@@ -177,7 +177,7 @@ class _NewCustomerScreenState extends State<NewCustomerScreen> {
                             '${widget.isFromCheckout ? 'Create and checkout' : 'Submit'}'),
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                Theme.of(context).accentColor)),
+                                Theme.of(context).indicatorColor)),
                         onPressed: () async {
                           if (_api.createLoadingState == LoadingState.loading)
                             return null;
